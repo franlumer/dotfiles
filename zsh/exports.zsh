@@ -1,0 +1,6 @@
+export PATH="$PATH:/mnt/c/Windows/System32"
+export PATH="$PATH:/mnt/c/Users/Luciano/AppData/Local/Programs/Python/Python313"
+export PATH="$PATH:/mnt/c/Users/Luciano/AppData/Local/Programs/Python/Python313/Scripts"
+export PATH="$PATH:/mnt/c/Program Files/MongoDB/Server/8.2/bin"
+export PATH="$PATH:/mnt/c/Program Files/MongoDB/Tools/100/bin"
+export PATH="$PATH:/mnt/c/Users/Luciano/Scripts"
