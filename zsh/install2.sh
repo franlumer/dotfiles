@@ -1,33 +1,12 @@
 #!/usr/bin/env bash
 
-DOTFILES="$HOME/dotfiles"
-
-for file in "$DOTFILES/zsh/modules"*; do
-	filename="$(basename "$file")"
-	# Devuelve solo el nombre del archivo (quita la ruta)
-
-	[[ "$base" == "." || "$base" == ".." ]] && continue
-	# En caso de que file sea . o .. los salta
-
-	ln -sf "$file" "$HOME/.zsh_config/$filename"
-done
-
-ln -sf "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
-ln -sf "$DOTFILES/.p10k.zsh" "$HOME/.p10k.zsh"
-
-unset file
-
-echo "Dotfiles instalados correctamente."
-
-#______________________________________________________________ REVISAR
-
-set -e
+DOTFILES="$PWD/dotfiles"
 
 echo "[+] Instalando Zsh"
-sudo apt install -y zsh git curl
+sudo apt install -y zsh
 
 echo "[+] Cambiando shell por defecto a zsh"
-chsh -s "$(which zsh)"
+chsh -s "$(which zsh)" || echo "⚠ Ejecuta 'chsh -s \$(which zsh)' manualmente después"
 
 echo "[+] Instalando Oh My Zsh"
 export RUNZSH=no
@@ -42,7 +21,7 @@ if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
       ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 fi
 
-echo "[+] Instalando autosuggestions y syntax-highlighting"
+echo "[+] Instalando plugins: autosuggestions y syntax-highlighting"
 if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions \
         ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -53,7 +32,34 @@ if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlightin
         ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 fi
 
-ln -sf "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+echo "[+] Creando estructura de configuración personalizada"
+mkdir -p "$HOME/.zsh/modules"
 
-echo "[+] Instalación completa"
+echo "[+] Copiando módulos personalizados"
+for file in "$DOTFILES/zsh/modules"/*; do
+    if [[ ! -f "$file" ]]; then
+        continue
+    fi
+    cp "$file" "$HOME/.zsh/modules/"
+done
 
+echo "[+] Copiando archivos de configuración básicos"
+for file in "$DOTFILES/zsh/basics"/*; do
+    filename="$(basename "$file")"
+    
+    if [[ ! -f "$file" ]]; then
+        continue
+    fi
+    
+    cp "$file" "$HOME/.zsh/$filename"
+done
+
+echo "[+] Copiando tema Powerlevel10k"
+if [ -f "$DOTFILES/.p10k.zsh" ]; then
+    cp "$DOTFILES/.p10k.zsh" "$HOME/.p10k.zsh"
+fi
+
+echo ""
+echo "✓ Instalación completa"
+echo "  → Configuración en: ~/.zsh/"
+echo "  → Cierra sesión y vuelve a entrar para usar zsh"

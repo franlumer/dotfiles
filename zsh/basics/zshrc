@@ -81,7 +81,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Hay que cargar los plugins antes de source a oh-my-zsh.sh
 
-source ~/.zsh_config/.plugins.zsh
+source ~/.zsh_config/plugins.zsh
 
 source $ZSH/oh-my-zsh.sh
 
@@ -119,7 +119,7 @@ source $ZSH/oh-my-zsh.sh
 
 # dotfiles
 
-for file in $HOME/.zsh_config/.{aliases,exports,ssh}.zsh; do
+for file in $HOME/.zsh_config/{aliases,exports,ssh}.zsh; do
 	[ -r "$file" ] && source "$file"
 done
 
