@@ -2,7 +2,7 @@
 
 DOTFILES="$HOME/dotfiles"
 
-for file in "$DOTFILES/zsh/"*; do
+for file in "$DOTFILES/zsh/modules"*; do
 	filename="$(basename "$file")"
 	# Devuelve solo el nombre del archivo (quita la ruta)
 
@@ -12,6 +12,7 @@ for file in "$DOTFILES/zsh/"*; do
 	ln -sf "$file" "$HOME/.zsh_config/$filename"
 done
 
+ln -sf "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
 ln -sf "$DOTFILES/.p10k.zsh" "$HOME/.p10k.zsh"
 
 unset file
@@ -54,6 +55,8 @@ if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlightin
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
         ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 fi
+
+ln -sf "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
 
 echo "[+] Instalación completa"
 
