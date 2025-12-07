@@ -23,9 +23,6 @@ echo "Dotfiles instalados correctamente."
 
 set -e
 
-echo "[+] Actualizando paquetes"
-sudo apt update -y && sudo apt upgrade -y
-
 echo "[+] Instalando Zsh"
 sudo apt install -y zsh git curl
 
