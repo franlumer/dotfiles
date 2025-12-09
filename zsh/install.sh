@@ -4,18 +4,25 @@
 ZSH_CONFIG="$HOME/.zsh_config"
 ZSH_MODULES="$ZSH_CONFIG/modules"
 
+# Backup de .zshrc existente
+if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
+    echo "[!] Haciendo backup de .zshrc existente"
+    cp "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d_%H%M%S)"
+fi
+
 mkdir -p "$ZSH_MODULES"
 
-# Instalacion de modulos
-for file in "$PWD/modules"/*; do
-	filename="$(basename "$file")"
+# Instalacion SOLO de plugins.zsh en modules/
+if [ -f "$PWD/modules/plugins.zsh" ]; then
+    cp "$PWD/modules/plugins.zsh" "$ZSH_MODULES/"
+fi
 
-	# En caso de que no sea regular file
-	if [[ ! -f "$file" ]]; then
-		continue
-	fi
-
-	cp "$file" "$ZSH_MODULES/"
+# Copiar dotfiles personalizados a la raíz de .zsh_config
+for file in "$PWD/modules"/{aliases,exports,ssh}.zsh; do
+    if [ -f "$file" ]; then
+        filename="$(basename "$file")"
+        cp "$file" "$ZSH_CONFIG/$filename"
+    fi
 done
 
 echo "[+] Instalando Zsh"
@@ -37,6 +44,9 @@ if [ ! -d "$ZSH" ]; then
     if [ -d "$HOME/.oh-my-zsh" ]; then
         mv "$HOME/.oh-my-zsh" "$ZSH"
     fi
+    
+    # Eliminar el .zshrc que creó Oh My Zsh
+    [ -f "$HOME/.zshrc" ] && rm "$HOME/.zshrc"
 fi
 
 echo "[+] Instalando Powerlevel10k"
@@ -60,13 +70,6 @@ fi
 echo "[+] Copiando archivos de configuración"
 cp "$PWD/basics/p10k.zsh" "$HOME/.p10k.zsh"
 cp "$PWD/basics/zshrc" "$ZSH_CONFIG/.zshrc"
-
-# Copiar dotfiles personalizados (aliases, exports, ssh)
-for file in "$PWD/modules"/{aliases,exports,ssh}.zsh; do
-    if [ -f "$file" ]; then
-        cp "$file" "$ZSH_CONFIG/"
-    fi
-done
 
 # Crear symlink al zshrc en HOME
 echo "[+] Creando symlink"
