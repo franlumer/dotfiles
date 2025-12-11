@@ -18,7 +18,7 @@ if [ -f "$PWD/modules/plugins.zsh" ]; then
 fi
 
 # Copiar dotfiles personalizados a la raíz de .zsh_config
-for file in "$PWD/modules"/{aliases,exports,ssh}.zsh; do
+for file in "$PWD/modules"/*.zsh; do
     if [ -f "$file" ]; then
         filename="$(basename "$file")"
         cp "$file" "$ZSH_CONFIG/$filename"
@@ -44,7 +44,7 @@ if [ ! -d "$ZSH" ]; then
     if [ -d "$HOME/.oh-my-zsh" ]; then
         mv "$HOME/.oh-my-zsh" "$ZSH"
     fi
-    
+
     # Eliminar el .zshrc que creó Oh My Zsh
     [ -f "$HOME/.zshrc" ] && rm "$HOME/.zshrc"
 fi
