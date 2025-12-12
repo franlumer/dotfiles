@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Instalacion de dependencias 
+echo "[+] Instalando dependencias"
+sudo apt update
+sudo apt install -y zsh git curl ca-certificates fonts-powerline
+
 # Definir rutas base
 ZSH_CONFIG="$HOME/.zsh_config"
 ZSH_MODULES="$ZSH_CONFIG/modules"
