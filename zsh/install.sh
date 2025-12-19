@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Instalacion de dependencias 
+# Instalacion de dependencias
 echo "[+] Instalando dependencias"
 sudo apt update
 sudo apt install -y zsh git curl ca-certificates fonts-powerline
