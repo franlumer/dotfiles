@@ -3,9 +3,8 @@
 # Instalacion de dependencias
 echo "[+] Instalando dependencias"
 sudo apt update
-sudo apt install -y zsh git curl ca-certificates fonts-powerline
+sudo apt install -y zsh git curl ca-certificates fonts-powerline eza
 
-# Definir rutas base
 ZSH_CONFIG="$HOME/.zsh_config"
 ZSH_MODULES="$ZSH_CONFIG/modules"
 
@@ -29,9 +28,6 @@ for file in "$PWD/modules"/*.zsh; do
         cp "$file" "$ZSH_CONFIG/$filename"
     fi
 done
-
-echo "[+] Instalando Zsh"
-sudo apt install -y zsh
 
 echo "[+] Cambiando shell por defecto a zsh"
 chsh -s "$(which zsh)"
@@ -81,4 +77,4 @@ echo "[+] Creando symlink"
 ln -sf "$ZSH_CONFIG/.zshrc" "$HOME/.zshrc"
 
 echo "[+] Instalación completa"
-echo "[!] Cierra y vuelve a abrir la terminal para aplicar los cambios"
+echo "[!] Cierra y vuelve a abrir para aplicar los cambios"
