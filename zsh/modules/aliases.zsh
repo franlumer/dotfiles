@@ -1,7 +1,7 @@
 # Custom aliases
 
-alias ll='ls -l --color=auto'
-alias lla='ls -l -a --color=auto'
+alias ll='eza -l --icons --color=auto'
+alias lla='eza -l -a --icons --color=auto'
 alias cll='clear && lla'
 alias bat='batcat'
 
