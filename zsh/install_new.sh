@@ -15,6 +15,10 @@ set -euo pipefail
 ZSH_CONFIG="$HOME/.zsh_config"
 ZSH_MODULES="$ZSH_CONFIG/modules"
 
+opt_update=false
+opt_new=false
+opt_backup=false
+
 function usage () {
     echo "Usage: $0 [-u] [-n] [-b]"
     echo "  -u  Update local instalation"
@@ -31,9 +35,11 @@ function install_dependencies() {
 
 function backup_old_zshrc() {
     # Backup de .zshrc existente
-    if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then # file y simlink
-        echo "[!] Haciendo backup de .zshrc existente"
-        cp "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d_%H%M%S)"
+    if "$opt_backup" == "true"; then 
+        if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then # file y simlink
+            echo "[!] Haciendo backup de .zshrc existente"
+            cp "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d_%H%M%S)"
+        fi
     fi
 }
 
@@ -110,31 +116,26 @@ function install_basics() {
 # ──────────────────────────────────────────
 
 # Flow
+#  install_dependencies
+#  backup_old_zshrc
+#  install_plugins
+#  copy_dotfiles
+#  config_zsh
+#  install_basics
 
-#install_dependencies
-#backup_old_zshrc
-#install_plugins
-#copy_dotfiles
-#config_zsh
-#install_basics
-
-function main () {
-    local opt_update
-    local opt_new
-    local opt_backup
-
-    [[ $# -eq 0 ]] && usage
+function main() {
+    [[ "$#" -eq 0 || "$#" -gt 2 ]] && usage
 
     while getopts ":unb" opt; do
         case "${opt}" in
-            u) opt_update=True ;;
-            n) opt_new=True ;;
-            b) opt_backup=True ;;
+            b) opt_backup=true
+                backup_old_zshrc
+                ;;
+            u) opt_update=true;;
+            n) opt_new=true;;
             *) usage ;;
         esac
     done
-
-
 }
 
 main "$@"
