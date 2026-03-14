@@ -10,7 +10,7 @@ function usage () {
 function backup_old_zshrc() {
     # Backup de .zshrc existente
     echo "Haciendo backup"
-}
+} 
 
 function main() {
     local opt_update
