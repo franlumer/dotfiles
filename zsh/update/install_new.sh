@@ -15,6 +15,8 @@ set -euo pipefail
 ZSH_CONFIG="$HOME/.zsh_config"
 ZSH_MODULES="$ZSH_CONFIG/modules"
 
+dependencies=(zsh git eza curl ca-certificates fonts-powerline)
+
 opt_update=false
 opt_new=false
 opt_backup=false
@@ -23,19 +25,18 @@ opt_backup=false
 
 function usage () {
     echo "Usage: $0 [-u] [-n] [-b]"
-    echo "  -u  Update local instalation"
-    echo "  -n  Clean instalation"
-    echo "  -b  Backup local instalation "
+    echo "  -u | Update local instalation"
+    echo "  -n | Clean instalation"
+    echo "  -b | Backup local instalation "
     exit 1
 }
 
 function install_dependencies() {
     echo "[+] Installing dependencies"
-    local dependencies=(zsh git eza curl ca-certificates fonts-powerline)
 
-    for i in "${dependencies[*]}";
+    for i in "${dependencies[@]}";
     do
-        if ! command -v "$i" &>/dev/null; then        # If not command
+        if ! command -v "$i" &>/dev/null && ! dpkg -l "$i" &>/dev/null ; then    # If not command
             if ! sudo apt install -y "$i"; then       # If cannot install
                 echo "[!] Error installing '$i'" >&2  # Error msg by stderr
             fi
@@ -43,12 +44,24 @@ function install_dependencies() {
     done
 }
 
-function backup_old_zshrc() {
-    # Backup de .zshrc existente
-    if "$opt_backup"; then 
-        if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then # file y simlink
-            echo "[!] Haciendo backup de .zshrc existente"
-            cp "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d_%H%M%S)"
+function backup() { # backup
+    if $opt_backup; then
+        local BACKUP_DIR="${2:-$HOME/.zsh_backup_$(date +%d-%m-%Y)}"
+
+        echo "[!] Haciendo backup de $HOME/.zsh_config -> $BACKUP_DIR"
+        
+        if [ ! -d "$BACKUP_DIR" ]; then
+            mkdir -p "$BACKUP_DIR"
+        fi
+
+        if [ -d "$HOME/.zsh_config" ]; then
+            for file in "$HOME"/.zsh_config/*; do
+                if [ -d "$file" ]; then
+                    cp -r "$file" "$BACKUP_DIR" 
+                elif [ -f "$file" ] && [ ! -L "$file" ]; then
+                    cp "$file" "$BACKUP_DIR" >&2
+                fi
+            done
         fi
     fi
 }
@@ -61,10 +74,10 @@ function install_plugins() {
 }
 
 function copy_dotfiles() {
-    for file in "$PWD/modules/*.zsh"; do
+    for file in "$PWD"/modules/*.zsh; do
         if [ -f "$file" ]; then
             filename="$(basename "$file")"
-            cp filename "$ZSH_CONFIG/$filename"
+            cp $file "$ZSH_CONFIG/$filename"
         fi
     done
 }
@@ -138,26 +151,20 @@ function main() {
 
     while getopts ":unb" opt; do
         case "${opt}" in
-            b) opt_backup=true
-                backup_old_zshrc
-                ;;
-            u) opt_update=true
-                install_dependencies
-                install_plugins
-                copy_dotfiles
-                config_zsh
-                install_basics
-                ;;
-            n) opt_new=true
-                install_dependencies
-                install_plugins
-                copy_dotfiles
-                config_zsh
-                install_basics
-                ;;
+            b) opt_backup=true ;;
+            u) opt_update=true ;;
+            n) opt_new=true ;;
             *) usage ;;
         esac
     done
+
+    install_dependencies
+    backup   
+    install_plugins         
+    copy_dotfiles
+    config_zsh
+    install_basics
+
 }
 
 main "$@"
