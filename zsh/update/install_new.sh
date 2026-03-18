@@ -3,12 +3,12 @@ set -euo pipefail
 
 # ──────────────────────────────────────────
 # Name:         install.sh
-# Description:  Instalacion basica de sehll zsh personalizada
+# Description:  Instalacion basica de shell zsh personalizada
 # Autor:        franlumer09
 # Date:         11-03-2026
 # Version:      1.0
 # Usage:        ./script.sh [-u] [-n] [-b]
-# ─────────────────────────────────── ───────
+# ──────────────────────────────────────────
 
 # Variables
 
