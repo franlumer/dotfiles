@@ -78,3 +78,7 @@ ln -sf "$ZSH_CONFIG/.zshrc" "$HOME/.zshrc"
 
 echo "[+] Instalación completa"
 echo "[!] Cierra y vuelve a abrir para aplicar los cambios"
+
+# Configurar GitHub
+
+# Falta agregar
