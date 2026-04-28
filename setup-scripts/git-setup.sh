@@ -7,6 +7,10 @@ CONFIG_FILE="$HOME/.ssh/config"
 mkdir -p "$SSH_KEY_DIR"
 
 read -p "Email for git: " email
+read -p "Username:" username
+
+git config --global user.name "$username"
+git config --global user.email "$email"
 
 if [[ -z "$email" ]]; then
     echo "No email"
