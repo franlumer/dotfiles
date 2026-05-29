@@ -1,0 +1,16 @@
+1. Dependencias
+	sudo apt install git zsh
+
+2. Bare repo
+	git clone --bare git@github.com:tuusuario/dotfiles.git ~/.dotfiles
+
+3. Alias temporal
+	alias dotfiles='git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
+
+4. Checkout
+	dotfiles checkout
+
+Si hay conflictos con archivos que ya existen (como un .zshrc default que Ubuntu crea), git se va a quejar. En ese caso:
+	mkdir -p ~/.dotfiles-backup
+	dotfiles checkout 2>&1 | grep "^\s" | awk '{print $1}' | xargs -I{} mv {} ~/.dotfiles-backup/{}
+	dotfiles checkout
