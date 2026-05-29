@@ -1,0 +1,1 @@
+/home/luciano/.zsh_config/.zshrc

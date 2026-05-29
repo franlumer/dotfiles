@@ -1,0 +1,34 @@
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Path to your Oh My Zsh installation.
+export ZSH_CONFIG="$HOME/.zsh_config"
+export ZSH="$ZSH_CONFIG/modules/oh-my-zsh"
+export HISTFILE="$ZSH_CONFIG/.zsh_history"
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Cargar plugins ANTES de oh-my-zsh.sh
+if [ -f "$ZSH_CONFIG/modules/plugins.zsh" ]; then
+    source "$ZSH_CONFIG/modules/plugins.zsh"
+fi
+
+# Source Oh My Zsh
+source $ZSH/oh-my-zsh.sh
+
+# Cargar dotfiles personalizados
+for file in $ZSH_CONFIG/{aliases,exports,ssh}.zsh; do
+	[ -r "$file" ] && source "$file"
+done
+unset file
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$PATH:/home/luciano/.config/nvm/versions/node/v25.9.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/snap/ghostty/718/bin:/home/luciano/go/bin/:home/luciano/scripts:/home/luciano/go/bin"
+export PATH="$PATH:/opt/mssql-tools18/bin"
+export PATH="$PATH:/opt/mssql-tools18/bin"
