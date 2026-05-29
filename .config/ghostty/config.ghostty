@@ -1,0 +1,77 @@
+# ╔══════════════════════════════════════════════════════╗
+# ║           Ghostty Configuration File                 ║
+# ║           ~/.config/ghostty/config                   ║
+# ╚══════════════════════════════════════════════════════╝
+
+
+# ─────────────────────────────────────────
+#  Tamaño predeterminado de la ventana
+# ─────────────────────────────────────────
+
+# Columnas y filas al abrir
+window-width = 120
+window-height = 34
+
+# Padding interno (píxeles)
+window-padding-x = 12
+window-padding-y = 10
+
+
+# ─────────────────────────────────────────
+#  Transparencia y efecto borroso
+# ─────────────────────────────────────────
+
+# Opacidad del fondo: 0.0 (invisible) → 1.0 (opaco)
+# no - 0.85 da un buen balance entre transparencia y legibilidad
+background-opacity = 0.85
+
+# no - Desenfoque del fondo (blur)
+# no - Requiere un compositor que lo soporte:
+# no -   - macOS: funciona nativo
+# no -   - Linux/Wayland: necesita compositor con soporte blur
+# no -     (KWin, Hyprland, Wayfire, etc.)
+# no -   - Linux/X11: depende del compositor (Picom, etc.)
+# no - background-blur-radius = 20
+
+
+# ─────────────────────────────────────────
+#  Fuente
+# ─────────────────────────────────────────
+
+font-family = "HackNerdFontMono-Regular"
+font-size = 13
+font-style = Regular
+
+
+# ─────────────────────────────────────────
+#  Colores (tema oscuro base)
+# ─────────────────────────────────────────
+
+# Fondo y texto principal
+# no - background = #1e1e2e
+# no - foreground = #cdd6f4
+
+# Cursor
+#cursor-color = #f5c2e7
+#cursor-style = block
+#cursor-style-blink = true
+
+# Colores de selección
+selection-background = #45475a
+selection-foreground = #cdd6f4
+
+
+# ─────────────────────────────────────────
+#  Comportamiento de la ventana
+# ─────────────────────────────────────────
+
+# Sin decoraciones de ventana (titlebar nativo)
+# Opciones: "none", "full", "transparent"
+#window-decoration = transparent
+
+# Mantener el proceso abierto al cerrar la última pestaña
+#quit-after-last-window-closed = true
+
+# Solucionar terminfo
+term = xterm-256color
+

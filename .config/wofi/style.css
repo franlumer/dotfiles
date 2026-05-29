@@ -1,0 +1,77 @@
+window {
+    margin: auto;
+    width: 1000px;
+    height: 400px;
+
+    background-color: rgba(20, 20, 35, 0.85); /* transparencia */
+    border-radius: 12px;
+    border: 1.5px solid rgba(180, 120, 255, 0.4);
+}
+
+/* contenedor general */
+#outer-box {
+    padding: 15px;
+}
+
+/* barra de búsqueda */
+#input {
+    padding: 5px;
+    margin-bottom: 15px;
+
+    border-radius: 5px;
+    border: none;
+
+    background-color: rgba(40, 40, 70, 0.6);
+    color: #e0d0ff;
+
+    font-size: 17px;
+}
+
+/* lista */
+#entry {
+    padding: 10px;
+    margin: 4px 0;
+
+    border-radius: 5px;
+    color: #d6c6ff;
+}
+
+/* item seleccionado */
+#entry:selected {
+    background: linear-gradient(90deg, #a970ff, #7a5cff);
+    color: #red;
+}
+
+/* texto */
+#text {
+    margin-left: 8px;
+}
+
+/* iconos */
+#img {
+    margin-right: 10px;
+}
+
+#entry:selected {
+    background: linear-gradient(90deg, #a970ff, #7a5cff);
+    color: #ffffff;
+
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+#entry {
+    position: relative;
+}
+
+#entry:selected {
+    background: linear-gradient(90deg, #a970ff, #7a5cff);
+    color: #ffffff;
+
+    border: none;
+    outline: none;
+    box-shadow: none;
+
+    padding-left: 20px;  /* Deja espacio entre el icono y el texto */
+}

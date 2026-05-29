@@ -1,0 +1,14 @@
+show=drun
+location=center
+anchor=center
+
+width=1000
+height=400
+
+xoffset=0
+yoffset=0
+
+prompt=Search:
+
+allow_images=true
+image_size=24
